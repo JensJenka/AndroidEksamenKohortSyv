@@ -9,13 +9,14 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var fragmentManager: FragmentManager
+    private var pictureArray = ArrayList<Picture>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
-    private lateinit var fragmentManager: FragmentManager
-
-    private var pictureArray = ArrayList<Picture>()
 
     fun switchFragment(v: View) {
         Log.i(Globals.TAG, "Activity 1 switchFragment. Tag: " + v.getTag().toString())
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         ).show()
 
         fragmentManager = supportFragmentManager
+        pictureArray = ArrayList<Picture>()
 
        if (Integer.parseInt(v.getTag().toString()) == 1) {
             fragmentManager
@@ -51,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 .beginTransaction()
                 .replace(
                     R.id.fragment_main,
-                    Fragment3(),
+                    Fragment3(pictureArray),
                     "Fragment3"
                 )
                 .commit()
