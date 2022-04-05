@@ -1,12 +1,20 @@
 package com.example.androideksamenkohortsyv
 
 import android.content.ContentValues
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
+import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
+import androidx.core.app.ActivityCompat.startActivityForResult
+
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -60,42 +68,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /*fun upload(view: View) {
-        var imageUri =
-            (fragmentManager.findFragmentByTag("Fragment1") as Fragment1).imageUri.toString()
+    fun SelectImage(view: View){
 
-        var rect = (fragmentManager.findFragmentByTag("Fragment1") as Fragment1).actualCropRect!!
-        var imgW = (fragmentManager.findFragmentByTag("Fragment1") as Fragment1).image.width
-        var imgH = (fragmentManager.findFragmentByTag("Fragment1") as Fragment1).image.height
+        val imageView: ImageView = findViewById<ImageView>(R.id.image)
+        Log.i(Globals.TAG,"TEST:" + imageView.width)
+    }
 
-        val newPicture: Picture = Picture(
-            imageUri,
-            rect.left.toInt(),
-            rect.top.toInt(),
-            rect.right.toInt(),
-            rect.bottom.toInt(),
-            imgW.toInt(),
-            imgH.toInt()
-        )
-        pictureArray.add(newPicture)
-
-       /* dbHelper?.writableDatabase?.insert("students", null, ContentValues().apply {
-            put("name", newStudent.name)
-            put("surname", newStudent.surname)
-            put(
-                "image",
-                bitmapTobyteArray(
-                    getBitmap(
-                        applicationContext,
-                        null,
-                        newStudent.imageUri,
-                        ::UriToBitmap
-                    )
-                ).toByteArray()
-            )
-        })
-
-        Toast.makeText(this, "Added New Student", Toast.LENGTH_SHORT).show() */
-    }*/
-
+    /*
+fun SelectImage() {
+    val intent = Intent()
+    intent.type = "image"
+    intent.action = Intent.ACTION_GET_CONTENT
+    startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE)
+}*/
 }
+
+
+
+
+
+
