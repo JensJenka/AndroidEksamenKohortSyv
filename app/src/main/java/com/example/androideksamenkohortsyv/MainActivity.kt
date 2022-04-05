@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         fragmentManager = supportFragmentManager
 
-       if (Integer.parseInt(v.getTag().toString()) == 2) {
+       if (Integer.parseInt(v.getTag().toString()) == 1) {
             fragmentManager
                 .beginTransaction()
                 .replace(
@@ -36,13 +36,23 @@ class MainActivity : AppCompatActivity() {
                     "Fragment1"
                 )
                 .commit()
+        } else if(Integer.parseInt(v.getTag().toString()) == 2){
+           fragmentManager
+               .beginTransaction()
+               .replace(
+                   R.id.fragment_main,
+                   Fragment2(),
+                   "Fragment2"
+               )
+               .commit()
+
         } else {
             fragmentManager
                 .beginTransaction()
                 .replace(
                     R.id.fragment_main,
-                    Fragment2(),
-                    "Fragment2"
+                    Fragment3(),
+                    "Fragment3"
                 )
                 .commit()
         }
