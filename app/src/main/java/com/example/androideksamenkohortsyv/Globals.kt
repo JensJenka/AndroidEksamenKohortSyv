@@ -11,7 +11,7 @@ import java.io.ByteArrayOutputStream
 import java.io.Serializable
 
 object Globals {
-    val TAG = "AndroidLifeCycle"
+    val TAG = "ExamKohort7"
 }
 
 data class Picture(var imageUri: String?, var x: Int, var y: Int, var w: Int, var h: Int, var imageH: Int, var imageW: Int, var position: Int=-1):
