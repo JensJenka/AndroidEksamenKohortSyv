@@ -21,19 +21,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Upload image" />
+                android:onClick="switchFragment"
+                android:tag="1"
+                android:text="Show fragment 2" />
+                <!--android:text="Upload image" /> -->
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Image search" />
+                android:onClick="switchFragment"
+                android:tag="2"
+                android:text="Show fragment 1" />
+                <!-- android:text="Image search" /> -->
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Saved results" />
+                android:onClick="switchFragment"
+                android:tag="3"
+                android:text="Show fragment 2" />
+                <!-- android:text="Saved results" /> -->
         </LinearLayout>
         <!--Navbar -->
 
@@ -48,7 +57,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Select Image from storage" />
+                android:text="Select Image from storage"
+                />
 
             <Button
                 android:layout_width="match_parent"

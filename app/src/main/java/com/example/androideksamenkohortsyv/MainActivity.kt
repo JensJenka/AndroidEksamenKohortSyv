@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     private var pictureArray = ArrayList<Picture>()
 
-   /* fun switchFragment(v: View) {
+    fun switchFragment(v: View) {
         Log.i(Globals.TAG, "Activity 1 switchFragment. Tag: " + v.getTag().toString())
         Toast.makeText(
             this,
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         fragmentManager = supportFragmentManager
 
-       if (Integer.parseInt(v.getTag().toString()) == 1) {
+       if (Integer.parseInt(v.getTag().toString()) == 2) {
             fragmentManager
                 .beginTransaction()
                 .replace(
@@ -41,12 +41,12 @@ class MainActivity : AppCompatActivity() {
                 .beginTransaction()
                 .replace(
                     R.id.fragment_main,
-                    Fragment2(studentsInfo),
+                    Fragment2(),
                     "Fragment2"
                 )
                 .commit()
         }
-    } */
+    }
 
     /*fun upload(view: View) {
         var imageUri =
