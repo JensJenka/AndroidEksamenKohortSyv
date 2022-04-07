@@ -2,6 +2,7 @@ package com.example.androideksamenkohortsyv
 
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -40,8 +41,9 @@ class Fragment1 : Fragment() {
 
         var view = inflater.inflate(R.layout.fragment1, container, false)
 
+        button = view.findViewById<Button>(R.id.select_btn)
         imageView = view.findViewById<ImageView>(R.id.imageView)
-        imageView.setOnClickListener(View.OnClickListener {
+        button.setOnClickListener(View.OnClickListener {
             var i = Intent()
             i.type = "*/*"
             i.action = Intent.ACTION_GET_CONTENT
