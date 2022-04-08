@@ -14,7 +14,7 @@ object Globals {
     val TAG = "ExamKohort7"
 }
 
-data class Picture(var imageUri: String?, var x: Int, var y: Int, var w: Int, var h: Int, var imageH: Int, var imageW: Int, var position: Int=-1):
+data class Picture(var imageUri: String?, var position: Int=-1):
     Serializable {
 }
 
@@ -39,6 +39,14 @@ fun UriToBitmap(context: Context, id: Int?, uri: String?): Bitmap {
 
 fun getBitmap(context: Context, id: Int?, uri: String?, decoder: (Context, Int?, String?) -> Bitmap): Bitmap {
     return decoder(context, id, uri)
+}
+
+fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
+    val bytes = ByteArrayOutputStream()
+    inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+    val path =
+        MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+    return Uri.parse(path)
 }
 
 fun bitmapTobyteArray(image: Bitmap): ByteArrayOutputStream {

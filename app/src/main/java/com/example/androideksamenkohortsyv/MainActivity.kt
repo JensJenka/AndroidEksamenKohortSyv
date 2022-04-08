@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         ).show()
 
         fragmentManager = supportFragmentManager
-        pictureArray = ArrayList<Picture>()
 
        if (Integer.parseInt(v.getTag().toString()) == 1) {
             fragmentManager
@@ -51,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                .beginTransaction()
                .replace(
                    R.id.fragment_main,
-                   Fragment2(),
+                   Fragment2(pictureArray),
                    "Fragment2"
                )
                .commit()
@@ -68,19 +67,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun SelectImage(view: View){
+    fun upload(view: View){
+        Log.i(Globals.TAG, "Fragment 1 upload pushed")
+        Toast.makeText(this, "Added New Picture", Toast.LENGTH_SHORT).show()
 
-        val imageView: ImageView = findViewById<ImageView>(R.id.image)
-        Log.i(Globals.TAG,"TEST:" + imageView.width)
+        var imageUri = (fragmentManager.findFragmentByTag("Fragment1") as Fragment1).imageUri.toString()
+
+        val newPicture: Picture = Picture(imageUri)
+        pictureArray.add(newPicture)
     }
-
-    /*
-fun SelectImage() {
-    val intent = Intent()
-    intent.type = "image"
-    intent.action = Intent.ACTION_GET_CONTENT
-    startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE)
-}*/
 }
 
 

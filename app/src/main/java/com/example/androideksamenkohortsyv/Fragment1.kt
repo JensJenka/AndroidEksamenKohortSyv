@@ -41,8 +41,9 @@ class Fragment1 : Fragment() {
 
         var view = inflater.inflate(R.layout.fragment1, container, false)
 
-        button = view.findViewById<Button>(R.id.select_btn)
         imageView = view.findViewById<ImageView>(R.id.imageView)
+
+        button = view.findViewById<Button>(R.id.select_btn)
         button.setOnClickListener(View.OnClickListener {
             var i = Intent()
             i.type = "*/*"
