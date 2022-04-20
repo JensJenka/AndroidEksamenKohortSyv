@@ -25,9 +25,10 @@ class Fragment2(val pictureArray: ArrayList<Picture>) : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         Log.i(Globals.TAG, "Fragment 2 onCreate")
         Toast.makeText(activity, "Fragment 2 onCreate", Toast.LENGTH_SHORT).show()
+
+
     }
 
     override fun onCreateView(

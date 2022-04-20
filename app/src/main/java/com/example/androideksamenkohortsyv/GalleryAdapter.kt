@@ -79,7 +79,7 @@ class GalleryAdapter (
 
 
         //        (((holder.itemView as LinearLayout).getChildAt(0) as ScrollView).getChildAt(0) as RecyclerView)
-//        (((holder.itemView as LinearLayout).getChildAt(0) as RecyclerView).getChildAt(0) as ImageView)
+        //        (((holder.itemView as LinearLayout).getChildAt(0) as RecyclerView).getChildAt(0) as ImageView)
         /*  var root: LinearLayout = view.findViewById<ScrollView>(R.id.imageSearchScreen).getChildAt(0) as LinearLayout
           var root1: ScrollView = view.findViewById<LinearLayout>(R.id.imageSearchScreen).getChildAt(0) as ScrollView
           var root2: ScrollView = view.findViewById<LinearLayout>(R.id.imageSearchScreen).getChildAt(0) as ScrollView*/

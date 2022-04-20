@@ -12,14 +12,17 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.core.app.ActivityCompat.startActivityForResult
-
-
+import org.json.JSONArray
+import org.json.JSONObject
+import java.net.URL
+import kotlin.concurrent.thread
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var fragmentManager: FragmentManager
     private var pictureArray = ArrayList<Picture>()
+    var uploadedPictureArray = ArrayList<Picture>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +78,21 @@ class MainActivity : AppCompatActivity() {
 
         val newPicture: Picture = Picture(imageUri)
         pictureArray.add(newPicture)
+
+        thread {
+            val result = URL("http://api-edu.gtl.ai/api/v1/imagesearch/upload").readText()
+            val json = JSONArray(result)
+            //val contentType = JSONArray("text/html; charset=UTF-8")
+
+            for (index in 0 until json.length()){
+                val imageUrl = (json.get(index) as JSONObject).getString("image_url")
+
+                uploadedPictureArray.add(Picture(imageUrl,-1))
+            }
+        }
     }
+
+
 }
 
 
