@@ -12,8 +12,12 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.core.app.ActivityCompat.startActivityForResult
-
-
+import java.io.ByteArrayInputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.nio.charset.Charset
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class MainActivity : AppCompatActivity() {
@@ -75,6 +79,31 @@ class MainActivity : AppCompatActivity() {
 
         val newPicture: Picture = Picture(imageUri)
         pictureArray.add(newPicture)
+        var bitmapImage = getBitmap(this, null, imageUri, ::UriToBitmap)
+
+
+        val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-kkmmss"))
+        val outputFile = File.createTempFile(timestamp, null, this.cacheDir)
+
+        if (outputFile.exists()) {
+            outputFile.delete()
+        }
+        else {
+            outputFile.parentFile?.mkdirs()
+        }
+
+
+        val input = bitmapImage.toString()
+        val inputStream = ByteArrayInputStream(input.toByteArray(Charset.defaultCharset()))
+
+        val outputStream = FileOutputStream(outputFile)
+
+        inputStream.use { input ->
+            outputStream.use { output ->
+                input.copyTo(output)
+            }
+        }
+        Log.i(Globals.TAG, "NYESTE BÆSJEN" + outputFile.toString() )
     }
 }
 
