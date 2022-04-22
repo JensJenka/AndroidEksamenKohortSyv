@@ -2,6 +2,7 @@ package com.example.androideksamenkohortsyv
 
 import android.content.ContentValues
 import android.content.Intent
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -12,12 +13,17 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.core.app.ActivityCompat.startActivityForResult
+import okhttp3.*
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.nio.charset.Charset
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.concurrent.thread
 
 
 class MainActivity : AppCompatActivity() {
@@ -77,34 +83,79 @@ class MainActivity : AppCompatActivity() {
 
         var imageUri = (fragmentManager.findFragmentByTag("Fragment1") as Fragment1).imageUri.toString()
 
+        Log.i(Globals.TAG, "imageuri: " + imageUri)
+        //val fileName: String? = imageUri.substringAfterLast("%3")
+       // Log.i(Globals.TAG, "Filename: " + fileName)
+
+
         val newPicture: Picture = Picture(imageUri)
         pictureArray.add(newPicture)
         var bitmapImage = getBitmap(this, null, imageUri, ::UriToBitmap)
 
-
         val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-kkmmss"))
         val outputFile = File.createTempFile(timestamp, null, this.cacheDir)
 
-        if (outputFile.exists()) {
-            outputFile.delete()
+        Log.i(Globals.TAG, "Eksisterer?:" + outputFile.exists())
+
+
+        //var imageUriFileName = imageUri.getData()
+
+        val imgOutputStream = ByteArrayOutputStream()
+        bitmapImage.compress(Bitmap.CompressFormat.PNG, 50, imgOutputStream)
+        val mediaType = "image/png".toMediaTypeOrNull()
+        val req = MultipartBody.Builder().setType(MultipartBody.FORM)
+            .addFormDataPart("image", "uploaded.png"
+                , RequestBody.create(mediaType, imgOutputStream.toByteArray())).build()
+
+        val urlBuilder = "http://api-edu.gtl.ai/api/v1/imagesearch/upload".toHttpUrlOrNull()!!.newBuilder()
+        val url = urlBuilder.build().toString()
+        val client = OkHttpClient()
+        thread {
+            val request = Request.Builder().url(url).post(req).build()
+            val response = client.newCall(request).execute()
+            val responseBody = response.body?.string()
+
+
+            Log.i(Globals.TAG , "Responsbody, link: "+ responseBody.toString())
+            var responscode = response.code
+            Log.i(Globals.TAG, "Code: " + responscode)
+
         }
-        else {
-            outputFile.parentFile?.mkdirs()
-        }
 
 
-        val input = bitmapImage.toString()
-        val inputStream = ByteArrayInputStream(input.toByteArray(Charset.defaultCharset()))
 
-        val outputStream = FileOutputStream(outputFile)
 
-        inputStream.use { input ->
-            outputStream.use { output ->
-                input.copyTo(output)
-            }
-        }
-        Log.i(Globals.TAG, "NYESTE BÆSJEN" + outputFile.toString() )
+
+        /*
+
+          if (outputFile.exists()) {
+              outputFile.delete()
+          }
+          else {
+              outputFile.parentFile?.mkdirs()
+          }
+
+
+          val input = bitmapImage.toString()
+          val inputStream = ByteArrayInputStream(input.toByteArray(Charset.defaultCharset()))
+
+          val outputStream = FileOutputStream(outputFile)
+
+          inputStream.use { input ->
+              outputStream.use { output ->
+                  input.copyTo(output)
+              }
+          }
+          Log.i(Globals.TAG, "NYESTE BÆSJEN" + outputFile.toString() )
+
+         */
+
+
+
+
     }
+
+
 }
 
 

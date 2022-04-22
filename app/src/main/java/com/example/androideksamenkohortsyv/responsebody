@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+      "http://www.w3.org/TR/html4/loose.dtd">
+    <html>
+      <head>
+        <title>KeyError: 'TMP' // Werkzeug Debugger</title>
+        <link rel="stylesheet" href="?__debugger__=yes&amp;cmd=resource&amp;f=style.css"
+            type="text/css">
+        <!-- We need to make sure this has a favicon so that the debugger does
+             not by accident trigger a request to /favicon.ico which might
+             change the application state. -->
+        <link rel="shortcut icon"
+            href="?__debugger__=yes&amp;cmd=resource&amp;f=console.png">
+        <script src="?__debugger__=yes&amp;cmd=resource&amp;f=jquery.js"></script>
+        <script src="?__debugger__=yes&amp;cmd=resource&amp;f=debugger.js"></script>
+        <script type="text/javascript">
+          var TRACEBACK = 140053208178592,
+              CONSOLE_MODE = false,
+              EVALEX = true,
+              EVALEX_TRUSTED = false,
+              SECRET = "5KVbEhPNdqQaX9sz3xdL";
+        </script>
+      </head>
+      <body style="background-color: #fff">
+        <div class="debugger">
+    <h1>KeyError</h1>
+    <div class="detail">
+      <p class="errormsg">KeyError: 'TMP'</p>
+    </div>
+    <h2 class="traceback">Traceback <em>(most recent call last)</em></h2>
+    <div class="traceback">
+
+      <ul><li><div class="frame" id="frame-140053223932256">
+      <h4>File <cite class="filename">"/usr/local/lib/python3.8/site-packages/flask/app.py"</cite>,
+          line <em class="line">2464</em>,
+          in <code class="function">__call__</code></h4>
+      <div class="source library"><pre class="line before"><span class="ws"></span> </pre>
+    <pre class="line before"><span class="ws">    </span>def __call__(self, environ, start_response):</pre>
+    <pre class="line before"><span class="ws">        </span>&quot;&quot;&quot;The WSGI server calls the Flask application object as the</pre>
+    <pre class="line before"><span class="ws">        </span>WSGI application. This calls :meth:`wsgi_app` which can be</pre>
+    <pre class="line before"><span class="ws">        </span>wrapped to applying middleware.&quot;&quot;&quot;</pre>
+    <pre class="line current"><span class="ws">        </span>return self.wsgi_app(environ, start_response)</pre>
+    <pre class="line after"><span class="ws"></span> </pre>
+    <pre class="line after"><span class="ws">    </span>def __repr__(self):</pre>
+    <pre class="line after"><span class="ws">        </span>return &quot;&lt;%s %r&gt;&quot; % (self.__class__.__name__, self.name)</pre></div>
+    </div>
+
+    <li><div class="frame" id="frame-140053223935376">
+      <h4>File <cite class="filename">"/usr/local/lib/python3.8/site-packages/flask/app.py"</cite>,
+          line <em class="line">2450</em>,
+          in <code class="function">wsgi_app</code></h4>
+      <div class="source library"><pre class="line before"><span class="ws">            </span>try:</pre>
+    <pre class="line before"><span class="ws">                </span>ctx.push()</pre>
+    <pre class="line before"><span class="ws">                </span>response = self.full_dispatch_request()</pre>
+    <pre class="line before"><span class="ws">            </span>except Exception as e:</pre>
+    <pre class="line before"><span class="ws">                </span>error = e</pre>
+    <pre class="line current"><span class="ws">                </span>response = self.handle_exception(e)</pre>
+    <pre class="line after"><span class="ws">            </span>except:  # noqa: B001</pre>
+    <pre class="line after"><span class="ws">                </span>error = sys.exc_info()[1]</pre>
+    <pre class="line after"><span class="ws">                </span>raise</pre>
+    <pre class="line after"><span class="ws">            </span>return response(environ, start_response)</pre>
+    <pre class="line after"><span class="ws">        </span>finally:</pre></div>
+    </div>
+
+    <li><div class="frame" id="frame-140053223935808">
+      <h4>File <cite class="filename">"/usr/local/lib/python3.8/site-packages/flask_restx/api.py"</cite>,
+          line <em class="line">672</em>,
+          in <code class="function">error_router</code></h4>
+      <div class="source library"><pre class="line before"><span class="ws">        </span>if self._has_fr_route():</pr
