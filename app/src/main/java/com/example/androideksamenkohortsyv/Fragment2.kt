@@ -51,7 +51,7 @@ class Fragment2(val pictureArray: ArrayList<Picture>, val responseLinkArray:Arra
 
         imageView.setImageBitmap(image)
 
-        button = view.findViewById<Button>(R.id.get_btn)
+       // button = view.findViewById<Button>(R.id.get_btn)
 
 
 

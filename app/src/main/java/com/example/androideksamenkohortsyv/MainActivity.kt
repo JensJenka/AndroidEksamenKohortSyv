@@ -19,6 +19,10 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.concurrent.thread
 import okhttp3.OkHttpClient
+import okhttp3.Response
+
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -115,7 +119,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun performImageSearch(view: View): List<Picture>{
+    fun performImageSearch(view: View) {
         val list = ArrayList<Picture>()
         Log.i(Globals.TAG, "perform SEARCH BUTTON")
 
@@ -125,15 +129,20 @@ class MainActivity : AppCompatActivity() {
         val fullURL = "http://api-edu.gtl.ai/api/v1/imagesearch/bing?url=$uriToGET"
         //Log.i(Globals.TAG, "URI to GET: " + response)
 
-        val client = OkHttpClient().newBuilder()
+        thread{
+            Log.i(Globals.TAG, "within search thread")
+            val client = OkHttpClient().newBuilder()
             .build()
         val request: Request = Request.Builder()
             .url(fullURL)
             .method("GET", null)
-            .addHeader("Content-Type", "application/json")
+            .addHeader("accept", "application/json")
             .build()
+
         val response = client.newCall(request).execute()
         Log.i(Globals.TAG, "R:" + response.toString())
+        }
+
 
 /*
             var ccurrencies = JSONObject(response.body).getJSONArray("data")
@@ -157,8 +166,6 @@ class MainActivity : AppCompatActivity() {
             }
 
  */
-
-        return list
 
     }
 
