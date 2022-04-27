@@ -94,8 +94,6 @@ class MainActivity : AppCompatActivity() {
         val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-kkmmss"))
         val outputFile = File.createTempFile(timestamp, null, this.cacheDir)
 
-        Log.i(Globals.TAG, "Eksisterer?:" + outputFile.exists())
-
         val imgOutputStream = ByteArrayOutputStream()
         bitmapImage.compress(Bitmap.CompressFormat.PNG, 50, imgOutputStream)
         val mediaType = "image/png".toMediaTypeOrNull()
@@ -142,9 +140,10 @@ class MainActivity : AppCompatActivity() {
 
         val response = client.newCall(request).execute()
         val responseBodyJasonArray = response.body?.string()
-        Log.i(Globals.TAG, "Jason Array: " + responseBodyJasonArray)
+        Log.i(Globals.TAG, "Here is the entire JSONArray: " + responseBodyJasonArray)
             val jsonArray = JSONTokener(responseBodyJasonArray).nextValue() as JSONArray
-                for (i in 0 until jsonArray.length()) {
+            Log.i(Globals.TAG, "Here are the results of the image search:")
+            for (i in 0 until jsonArray.length()) {
 
                     val thumbNail = jsonArray.getJSONObject(i).getString("thumbnail_link")
                     val imageLink = jsonArray.getJSONObject(i).getString("image_link")
@@ -155,9 +154,10 @@ class MainActivity : AppCompatActivity() {
                             imageLink
                         )
                     )
-                    Log.i(Globals.TAG, "OBJ: " + list[i])
+                    Log.i(Globals.TAG, "OBJ "+ i + list[i])
                 }
         }
+        Log.i(Globals.TAG, "Paste uri in browser to see result")
         return list
     }
 }
