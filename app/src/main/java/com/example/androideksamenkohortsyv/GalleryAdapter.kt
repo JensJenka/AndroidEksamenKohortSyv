@@ -1,13 +1,8 @@
 package com.example.androideksamenkohortsyv
 
-import android.R.attr
-import android.content.Context
-import android.graphics.Bitmap
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import android.R.attr.data
-import android.R.attr.keepScreenOn
 import android.widget.*
 
 
@@ -16,6 +11,9 @@ class GalleryAdapter (
     val onItemClickListener: View.OnClickListener,
     val onItemKeepListener: View.OnClickListener
     ) : RecyclerView.Adapter<GalleryAdapter.ItemViewHolder>() {
+    /*
+    * This was the planed adapter, and things did not go according to plan
+    * */
 
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {  }
 

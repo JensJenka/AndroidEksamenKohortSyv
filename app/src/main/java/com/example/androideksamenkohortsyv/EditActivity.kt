@@ -2,14 +2,11 @@ package com.example.androideksamenkohortsyv
 
 import android.content.Intent
 import android.graphics.Bitmap
-import android.media.Image
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.edmodo.cropper.CropImageView
 
 class EditActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,13 +25,8 @@ class EditActivity : AppCompatActivity() {
         if (oldSelectedPicture.imageUri != null) {
             image = Bitmap.createBitmap(image)
 
-        /*    image = Bitmap.createScaledBitmap(
-                image,
-                (resources.displayMetrics.density * 200).toInt(),
-                (resources.displayMetrics.density * 200).toInt(),
-                false
-            )*/
         }
+        //This sets the image that you have uploaded to the imageview in the phone
         imageView.setImageBitmap(image)
 
         val uploadButton: Button = findViewById<Button>(R.id.upload_btn)

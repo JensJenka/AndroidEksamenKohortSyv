@@ -1,25 +1,18 @@
 package com.example.androideksamenkohortsyv
 
-import android.app.Activity
-import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ScrollView
-import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
+import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 
-class Fragment2(val pictureArray: ArrayList<Picture>) : Fragment() {
+class Fragment2(val pictureArray: ArrayList<Picture>, val responseLinkArray:ArrayList<String>) : Fragment() {
 
     lateinit var imageView: ImageView
+    lateinit var button: Button
     var itemAdapter: GalleryAdapter? = null
 
 
@@ -43,58 +36,24 @@ class Fragment2(val pictureArray: ArrayList<Picture>) : Fragment() {
 
         val index = pictureArray.lastIndex
         val uploadedPicture = pictureArray[index]
-        Log.i(Globals.TAG, "Display Picture from array, index location: " + index)
+        Log.i(
+            Globals.TAG,
+            "Display Picture from array, index location: " + index + ", with URI: " + responseLinkArray[index]
+        )
 
         val imageView: ImageView = view.findViewById<ImageView>(R.id.imageView)
 
         var image: Bitmap = if (uploadedPicture.imageUri != null)
             getBitmap(requireContext(), null, uploadedPicture.imageUri, ::UriToBitmap)
-        else getBitmap(requireContext(), R.drawable.ic_launcher_foreground, null, ::VectorDrawableToBitmap)
+        else getBitmap(
+            requireContext(),
+            R.drawable.ic_launcher_foreground,
+            null,
+            ::VectorDrawableToBitmap
+        )
 
         imageView.setImageBitmap(image)
 
-
-        //------------------------^FUNKER------------------------------------------------------------------------//
-        val recyclerView: RecyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
-
-        var onItemClickListener = object: View.OnClickListener {
-            override fun onClick(view: View?) {
-
-                val position: Int = view?.tag.toString().toInt()
-                pictureArray.get(position)
-
-                itemAdapter?.notifyDataSetChanged()
-            }
-        }
-
-        var onItemKeepListener = object: View.OnClickListener {
-            override fun onClick(view: View?) {
-
-                val position: Int = view?.tag.toString().toInt()
-                val selectedPicture: Picture = Picture(position.toString())
-                selectedPicture.position = position
-
-                val intent: Intent = Intent(activity, EditActivity::class.java)
-                intent.putExtra("onItemKeepListener TEZT", selectedPicture)
-                startForResult.launch(intent)
-            }
-        }
-
-        itemAdapter = GalleryAdapter(pictureArray, onItemClickListener, onItemKeepListener)
-        recyclerView.setAdapter(itemAdapter)
-
         return view
     }
-
-    val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val intent = result.data
-            val updatePicture: Picture = (intent?.getSerializableExtra("selected_student") as Picture)
-
-            pictureArray.set(updatePicture.position, updatePicture)
-
-            itemAdapter?.notifyDataSetChanged()
-        }
-    }
-
 }

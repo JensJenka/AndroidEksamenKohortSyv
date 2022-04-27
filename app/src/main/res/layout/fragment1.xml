@@ -24,6 +24,7 @@
             android:onClick="upload"
             android:text="Upload selected area" />
 
+
     </LinearLayout>
 
     <ImageView

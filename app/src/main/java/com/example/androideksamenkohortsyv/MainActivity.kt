@@ -15,12 +15,16 @@ import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.concurrent.thread
+import okhttp3.OkHttpClient
+import org.json.JSONArray
+import org.json.JSONTokener
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var fragmentManager: FragmentManager
     private var pictureArray = ArrayList<Picture>()
+    private var responseLinkArray = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                .beginTransaction()
                .replace(
                    R.id.fragment_main,
-                   Fragment2(pictureArray),
+                   Fragment2(pictureArray, responseLinkArray),
                    "Fragment2"
                )
                .commit()
@@ -68,6 +72,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //The function that posts the uploaded picture to the server
+    //and returns an uri which is then stored in an array for later retrieval
     fun upload(view: View){
         Log.i(Globals.TAG, "Fragment 1 upload pushed")
         Toast.makeText(this, "Added New Picture", Toast.LENGTH_SHORT).show()
@@ -83,8 +89,6 @@ class MainActivity : AppCompatActivity() {
 
         val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-kkmmss"))
         val outputFile = File.createTempFile(timestamp, null, this.cacheDir)
-
-        Log.i(Globals.TAG, "Eksisterer?:" + outputFile.exists())
 
         val imgOutputStream = ByteArrayOutputStream()
         bitmapImage.compress(Bitmap.CompressFormat.PNG, 50, imgOutputStream)
@@ -104,9 +108,55 @@ class MainActivity : AppCompatActivity() {
             Log.i(Globals.TAG , "Responsbody, link: "+ responseBody.toString())
             var responscode = response.code
             Log.i(Globals.TAG, "Code: " + responscode)
+
+            responseLinkArray.add(responseBody.toString())
+            Log.i(Globals.TAG, "ResponseLinkArray ADD: " + responscode)
         }
     }
 
+    //This is the function performing the get request
+    fun performImageSearch(view: View) : List<Picture>{
+        val list = ArrayList<Picture>()
+        Log.i(Globals.TAG, "perform SEARCH BUTTON")
+
+        val index = responseLinkArray.lastIndex
+        val uriToGET = responseLinkArray[index]
+
+        val fullURL = "http://api-edu.gtl.ai/api/v1/imagesearch/bing?url=$uriToGET"
+
+        thread{
+            Log.i(Globals.TAG, "within search thread")
+            val client = OkHttpClient().newBuilder()
+            .build()
+        val request: Request = Request.Builder()
+            .url(fullURL)
+            .method("GET", null)
+            .addHeader("accept", "application/json")
+            .build()
+
+        val response = client.newCall(request).execute()
+        val responseBodyJasonArray = response.body?.string()
+        Log.i(Globals.TAG, "Here is the entire JSONArray: " + responseBodyJasonArray)
+            val jsonArray = JSONTokener(responseBodyJasonArray).nextValue() as JSONArray
+            Log.i(Globals.TAG, "Here are the results of the image search:")
+            for (i in 0 until jsonArray.length()) {
+
+                    val thumbNail = jsonArray.getJSONObject(i).getString("thumbnail_link")
+                    val imageLink = jsonArray.getJSONObject(i).getString("image_link")
+
+                //Add the uri's to a list pertaining to the specific picture uploaded
+                    list.add(
+                        Picture(
+                            thumbNail,
+                            imageLink
+                        )
+                    )
+                    Log.i(Globals.TAG, "OBJ "+ i + list[i])
+                }
+            Log.i(Globals.TAG, "Paste uri in browser to see result")
+        }
+        return list
+    }
 }
 
 
