@@ -1,13 +1,8 @@
 package com.example.androideksamenkohortsyv
 
-import android.R.attr
-import android.content.Context
-import android.graphics.Bitmap
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import android.R.attr.data
-import android.R.attr.keepScreenOn
 import android.widget.*
 
 

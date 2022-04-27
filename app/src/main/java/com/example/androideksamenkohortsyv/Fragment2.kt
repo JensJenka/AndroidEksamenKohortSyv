@@ -1,7 +1,5 @@
 package com.example.androideksamenkohortsyv
 
-import android.app.Activity
-import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
@@ -9,10 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 
 class Fragment2(val pictureArray: ArrayList<Picture>, val responseLinkArray:ArrayList<String>) : Fragment() {
 
