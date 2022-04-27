@@ -14,7 +14,7 @@ object Globals {
     val TAG = "ExamKohort7"
 }
 
-data class Picture(var imageUri: String?, var position: Int=-1):
+data class Picture(var imageUri: String? = "", var thumbnailLink: String? = "", var imageLink: String? = "", var position: Int=-1):
     Serializable {
 }
 

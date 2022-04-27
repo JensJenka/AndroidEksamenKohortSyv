@@ -8,6 +8,8 @@ import android.view.View
 import org.json.JSONObject
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -20,9 +22,8 @@ import java.time.format.DateTimeFormatter
 import kotlin.concurrent.thread
 import okhttp3.OkHttpClient
 import okhttp3.Response
-
-
-
+import org.json.JSONArray
+import org.json.JSONTokener
 
 
 class MainActivity : AppCompatActivity() {
@@ -119,7 +120,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun performImageSearch(view: View) {
+    fun performImageSearch(view: View) : List<Picture>{
         val list = ArrayList<Picture>()
         Log.i(Globals.TAG, "perform SEARCH BUTTON")
 
@@ -140,63 +141,25 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         val response = client.newCall(request).execute()
-        Log.i(Globals.TAG, "R:" + response.toString())
+        val responseBodyJasonArray = response.body?.string()
+        Log.i(Globals.TAG, "Jason Array: " + responseBodyJasonArray)
+            val jsonArray = JSONTokener(responseBodyJasonArray).nextValue() as JSONArray
+                for (i in 0 until jsonArray.length()) {
+
+                    val thumbNail = jsonArray.getJSONObject(i).getString("thumbnail_link")
+                    val imageLink = jsonArray.getJSONObject(i).getString("image_link")
+
+                    list.add(
+                        Picture(
+                            thumbNail,
+                            imageLink
+                        )
+                    )
+                    Log.i(Globals.TAG, "OBJ: " + list[i])
+                }
         }
-
-/*
-
-            var ccurrencies = JSONObject(response.body).getJSONArray("data")
-
-            for (i in 0 until ccurrencies.length()){
-
-                list.add(
-                    CCurrencyStats(
-                        ccurrencies.getJSONObject(i).getString("id"),
-                        ccurrencies.getJSONObject(i).getString("rank"),
-                        ccurrencies.getJSONObject(i).getString("symbol"),
-                        ccurrencies.getJSONObject(i).getString("name"),
-                        ccurrencies.getJSONObject(i).getString("supply"),
-                        ccurrencies.getJSONObject(i).getString("maxSupply"),
-                        ccurrencies.getJSONObject(i).getString("marketCapUsd"),
-                        ccurrencies.getJSONObject(i).getString("volumeUsd24Hr"),
-                        ccurrencies.getJSONObject(i).getString("priceUsd"),
-                        ccurrencies.getJSONObject(i).getString("changePercent24Hr"),
-                        ccurrencies.getJSONObject(i).getString("vwap24Hr"),
-                        ccurrencies.getJSONObject(i).getString("explorer")))
-            }
-
- */
+        return list
     }
-
-    private fun get(endpointURL: String): HTTPResponse {
-
-        var url = URL(endpointURL)
-        val connection = url.openConnection() as HttpURLConnection
-        try {
-            connection.requestMethod = "GET"
-
-            connection.connect()
-
-            val stream = if (connection.responseCode in 200..300) connection.inputStream else connection.errorStream
-            val responseBody = try {
-                stream.bufferedReader(Charsets.UTF_8).use {it.readText()}
-            } catch (e: Throwable) {
-                ""
-            }
-
-            return HTTPResponse(connection.responseCode, responseBody)
-        }catch (e: Throwable) {
-            return HTTPResponse(connection.responseCode, "")
-        } finally {
-            connection.disconnect()
-        }
-    }
-
-    class HTTPResponse (private val statusCode: Int, val body: String) {
-        val isSuccessful = statusCode in 200..300
-    }
-
-
 }
 
 
