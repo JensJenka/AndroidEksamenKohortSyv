@@ -143,8 +143,8 @@ class MainActivity : AppCompatActivity() {
         Log.i(Globals.TAG, "R:" + response.toString())
         }
 
-
 /*
+
             var ccurrencies = JSONObject(response.body).getJSONArray("data")
 
             for (i in 0 until ccurrencies.length()){
@@ -166,7 +166,6 @@ class MainActivity : AppCompatActivity() {
             }
 
  */
-
     }
 
     private fun get(endpointURL: String): HTTPResponse {
