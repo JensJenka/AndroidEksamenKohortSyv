@@ -51,8 +51,6 @@ class Fragment1 : Fragment() {
 
             startForResult.launch(i)
         })
-
-
         return view
     }
 

@@ -8,18 +8,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ScrollView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 
-class Fragment2(val pictureArray: ArrayList<Picture>) : Fragment() {
+class Fragment2(val pictureArray: ArrayList<Picture>, val responseLinkArray:ArrayList<String>) : Fragment() {
 
     lateinit var imageView: ImageView
+    lateinit var button: Button
     var itemAdapter: GalleryAdapter? = null
 
 
@@ -43,7 +41,7 @@ class Fragment2(val pictureArray: ArrayList<Picture>) : Fragment() {
 
         val index = pictureArray.lastIndex
         val uploadedPicture = pictureArray[index]
-        Log.i(Globals.TAG, "Display Picture from array, index location: " + index)
+        Log.i(Globals.TAG, "Display Picture from array, index location: " + index + ", with URI: " + responseLinkArray[index])
 
         val imageView: ImageView = view.findViewById<ImageView>(R.id.imageView)
 
@@ -53,6 +51,11 @@ class Fragment2(val pictureArray: ArrayList<Picture>) : Fragment() {
 
         imageView.setImageBitmap(image)
 
+        button = view.findViewById<Button>(R.id.get_btn)
+
+
+
+        return view
 
         //------------------------^FUNKER------------------------------------------------------------------------//
         val recyclerView: RecyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
