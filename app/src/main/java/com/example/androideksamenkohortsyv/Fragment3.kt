@@ -15,6 +15,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 
 class Fragment3(val pictureArray: ArrayList<Picture>) : Fragment() {
+/*
+* This fragment was planed to be in use, but are not used in the final product
+* There were problems attaching the receiving images to the adapter
+* Resulting in us raither just outouting the results in the 'Run' window
+* */
 
     lateinit var imageView: ImageView
     var itemAdapter: GalleryAdapter? = null
@@ -51,10 +56,6 @@ class Fragment3(val pictureArray: ArrayList<Picture>) : Fragment() {
                 val position: Int = view?.tag.toString().toInt()
                 val selectedPicture: Picture = pictureArray.get(position)
                 selectedPicture.position = position
-
-             /*   val intent: Intent = Intent(activity, UploadActivity::class.java)
-                intent.putExtra("selected_student", selectedPicture)
-                startForResult.launch(intent)*/
             }
         }
         itemAdapter = GalleryAdapter(pictureArray, onItemClickListener, onItemKeepListener)

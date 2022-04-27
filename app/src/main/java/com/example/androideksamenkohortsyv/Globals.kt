@@ -48,9 +48,3 @@ fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
         MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
     return Uri.parse(path)
 }
-
-fun bitmapTobyteArray(image: Bitmap): ByteArrayOutputStream {
-    val outputStream = ByteArrayOutputStream()
-    image.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-    return outputStream
-}

@@ -78,6 +78,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //The function that posts the uploaded picture to the server
+    //and returns an uri which is then stored in an array for later retrieval
     fun upload(view: View){
         Log.i(Globals.TAG, "Fragment 1 upload pushed")
         Toast.makeText(this, "Added New Picture", Toast.LENGTH_SHORT).show()
@@ -118,6 +120,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //This is the function performing the get request
     fun performImageSearch(view: View) : List<Picture>{
         val list = ArrayList<Picture>()
         Log.i(Globals.TAG, "perform SEARCH BUTTON")
@@ -126,7 +129,6 @@ class MainActivity : AppCompatActivity() {
         val uriToGET = responseLinkArray[index]
 
         val fullURL = "http://api-edu.gtl.ai/api/v1/imagesearch/bing?url=$uriToGET"
-        //Log.i(Globals.TAG, "URI to GET: " + response)
 
         thread{
             Log.i(Globals.TAG, "within search thread")
@@ -148,6 +150,7 @@ class MainActivity : AppCompatActivity() {
                     val thumbNail = jsonArray.getJSONObject(i).getString("thumbnail_link")
                     val imageLink = jsonArray.getJSONObject(i).getString("image_link")
 
+                //Add the uri's to a list pertaining to the specific picture uploaded
                     list.add(
                         Picture(
                             thumbNail,
@@ -156,8 +159,8 @@ class MainActivity : AppCompatActivity() {
                     )
                     Log.i(Globals.TAG, "OBJ "+ i + list[i])
                 }
+            Log.i(Globals.TAG, "Paste uri in browser to see result")
         }
-        Log.i(Globals.TAG, "Paste uri in browser to see result")
         return list
     }
 }

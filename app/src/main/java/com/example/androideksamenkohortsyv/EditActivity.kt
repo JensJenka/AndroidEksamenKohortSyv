@@ -28,13 +28,8 @@ class EditActivity : AppCompatActivity() {
         if (oldSelectedPicture.imageUri != null) {
             image = Bitmap.createBitmap(image)
 
-        /*    image = Bitmap.createScaledBitmap(
-                image,
-                (resources.displayMetrics.density * 200).toInt(),
-                (resources.displayMetrics.density * 200).toInt(),
-                false
-            )*/
         }
+        //This sets the image that you have uploaded to the imageview in the phone
         imageView.setImageBitmap(image)
 
         val uploadButton: Button = findViewById<Button>(R.id.upload_btn)

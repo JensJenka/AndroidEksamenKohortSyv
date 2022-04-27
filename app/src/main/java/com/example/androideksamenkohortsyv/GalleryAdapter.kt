@@ -16,6 +16,9 @@ class GalleryAdapter (
     val onItemClickListener: View.OnClickListener,
     val onItemKeepListener: View.OnClickListener
     ) : RecyclerView.Adapter<GalleryAdapter.ItemViewHolder>() {
+    /*
+    * This was the planed adapter, and things did not go according to plan
+    * */
 
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {  }
 

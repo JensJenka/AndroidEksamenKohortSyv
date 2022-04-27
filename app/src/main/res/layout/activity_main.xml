@@ -23,7 +23,7 @@
                 android:layout_weight="1"
                 android:onClick="switchFragment"
                 android:tag="1"
-                android:text="Show fragment 1" />
+                android:text="Select and Upload image" />
                 <!--android:text="Upload image" /> -->
 
             <Button
@@ -32,7 +32,7 @@
                 android:layout_weight="1"
                 android:onClick="switchFragment"
                 android:tag="2"
-                android:text="Show fragment 2" />
+                android:text="Perform reversed search" />
                 <!-- android:text="Image search" /> -->
 
             <Button
@@ -41,7 +41,7 @@
                 android:layout_weight="1"
                 android:onClick="switchFragment"
                 android:tag="3"
-                android:text="Show fragment 3" />
+                android:text="Planned gallery(not time)" />
                 <!-- android:text="Saved results" /> -->
         </LinearLayout>
         <!--Navbar -->
